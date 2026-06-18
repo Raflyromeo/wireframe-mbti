@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframe 01 — Landing Page | MBTI Pakar</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f0f0f0; color: #222; font-size: 13px; }
+    .wf-page { max-width: 1100px; margin: 0 auto; background: #fafafa; border: 1.5px solid #ccc; }
+
+    /* ═══ NAVBAR ═══ */
+    .wf-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 24px; height: 56px; border-bottom: 1.5px solid #ccc; background: #fff; }
+    .wf-logo { display: flex; align-items: center; gap: 7px; font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: -0.5px; }
+    .wf-logo-icon { width: 20px; height: 20px; background: #ccc; border: 1px solid #aaa; border-radius: 3px; }
+    .wf-nav-pill { display: flex; gap: 2px; background: #e0e0e0; border: 1.5px solid #bbb; border-radius: 999px; padding: 3px; }
+    .wf-pill-item { padding: 5px 14px; border-radius: 999px; font-size: 11px; font-weight: bold; border: 1.5px solid transparent; }
+    .wf-pill-active { background: #fff; border-color: #bbb; }
+    .wf-nav-right { display: flex; align-items: center; gap: 8px; }
+    .wf-circle-btn { width: 30px; height: 30px; border: 1.5px solid #bbb; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+    .wf-masuk-btn { display: flex; align-items: center; gap: 5px; padding: 7px 16px; border: 1.5px solid #888; background: #444; color: #fff; font-weight: 900; font-size: 11px; border-radius: 999px; }
+
+    /* ═══ HERO ═══ */
+    .wf-hero { padding: 56px 40px 48px; text-align: center; border-bottom: 1.5px solid #ccc; background: #fafafa; }
+    .wf-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 16px; border: 1.5px solid #bbb; background: #e8e8e8; font-size: 10px; font-weight: bold; border-radius: 999px; margin-bottom: 28px; }
+    .wf-h1 { font-size: 64px; font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 16px; }
+    .wf-h1 em { font-style: italic; color: #666; }
+    .wf-sub { font-size: 14px; color: #777; max-width: 500px; margin: 0 auto 32px; line-height: 1.5; }
+    .wf-hero-btns { display: flex; justify-content: center; gap: 14px; }
+    .wf-btn-fill { display: flex; align-items: center; gap: 6px; padding: 14px 28px; border: 2px solid #555; background: #555; color: #fff; font-weight: 900; font-size: 13px; border-radius: 14px; }
+    .wf-btn-outline { display: flex; align-items: center; gap: 6px; padding: 14px 28px; border: 2px solid #888; background: #f5f5f5; font-weight: 900; font-size: 13px; border-radius: 14px; }
+
+    /* ═══ MARQUEE ═══ */
+    .wf-marquee { background: #ddd; border-top: 2px solid #bbb; border-bottom: 2px solid #bbb; padding: 12px 0; overflow: hidden; white-space: nowrap; }
+    .wf-marquee-inner { display: inline-flex; gap: 36px; animation: scroll 18s linear infinite; }
+    .wf-marquee-inner span { font-weight: 900; font-size: 14px; letter-spacing: 3px; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ═══ CARA KERJA ═══ */
+    .wf-section { padding: 48px 40px; border-bottom: 1.5px solid #ccc; }
+    .wf-sec-title { font-size: 40px; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 4px; }
+    .wf-sec-sub { font-size: 12px; color: #888; margin-bottom: 32px; }
+    .wf-cara-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+    .wf-step { display: flex; gap: 14px; padding: 16px; border: 1.5px solid #ccc; background: #fff; margin-bottom: 12px; }
+    .wf-step-num { width: 48px; height: 48px; flex-shrink: 0; background: #e0e0e0; border: 1.5px solid #bbb; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; border-radius: 10px; }
+    .wf-step h3 { font-weight: bold; font-size: 13px; margin-bottom: 4px; }
+    .wf-step p { font-size: 11px; color: #777; line-height: 1.5; }
+    /* Preview card (DasborPreview) */
+    .wf-preview { border: 1.5px solid #bbb; background: #fff; padding: 18px; }
+    .wf-preview-head { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 12px; }
+    .wf-ptype { font-size: 34px; font-weight: 900; text-align: center; padding: 8px; border: 1.5px solid #ccc; margin-bottom: 6px; color: #555; }
+    .wf-pname { text-align: center; font-size: 10px; color: #888; margin-bottom: 12px; }
+    .wf-pbar { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .wf-pbar-lbl { font-size: 10px; font-weight: bold; width: 12px; text-align: right; }
+    .wf-pbar-track { flex: 1; height: 10px; background: #e8e8e8; border: 1px solid #ccc; }
+    .wf-pbar-fill { height: 100%; background: #aaa; }
+    .wf-pbar-pct { font-size: 10px; width: 26px; }
+    .wf-preview-btn { margin-top: 14px; border-top: 1px solid #ddd; padding-top: 12px; }
+    .wf-preview-btn div { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border: 1.5px solid #666; background: #555; color: #fff; font-weight: bold; font-size: 11px; }
+
+    /* ═══ 16 TIPE MBTI ═══ */
+    .wf-muted { background: #ebebeb; border-top: 2px solid #ccc; border-bottom: 2px solid #ccc; }
+    /* Kartu aktif besar */
+    .wf-tipe-card { border: 2px solid #aaa; background: #fff; padding: 28px; margin-bottom: 14px; }
+    .wf-tipe-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .wf-tipe-code { font-size: 56px; font-weight: 900; letter-spacing: -2px; color: #555; line-height: 1; }
+    .wf-tipe-julukan { font-size: 12px; font-weight: bold; text-transform: uppercase; color: #888; margin-top: 4px; }
+    .wf-tipe-badge { display: inline-block; font-size: 10px; font-weight: 900; background: #444; color: #fff; padding: 4px 10px; border-radius: 999px; }
+    .wf-tipe-desc { font-size: 12px; color: #666; line-height: 1.6; margin-bottom: 16px; }
+    .wf-tipe-tags { display: flex; gap: 6px; }
+    .wf-tag { display: inline-block; font-size: 11px; font-weight: 900; padding: 4px 10px; border: 1.5px solid #aaa; border-radius: 6px; color: #555; }
+    /* Deret tombol tipe */
+    .wf-tipe-scroll { display: flex; gap: 8px; overflow-x: hidden; padding-bottom: 4px; flex-wrap: wrap; margin-bottom: 14px; }
+    .wf-tipe-btn { padding: 8px 14px; border: 2px solid #bbb; background: #f5f5f5; font-weight: 900; font-size: 12px; border-radius: 10px; }
+    .wf-tipe-btn.active { background: #333; color: #fff; border-color: #333; }
+    /* Nav ← → */
+    .wf-tipe-nav { display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .wf-nav-circle { width: 44px; height: 44px; border: 2px solid #bbb; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; }
+    .wf-tipe-count { font-size: 11px; color: #888; font-weight: bold; }
+
+    /* ═══ FAQ ═══ */
+    .wf-faq-section { padding: 48px 40px; border-bottom: 1.5px solid #ccc; max-width: 760px; margin: 0 auto; }
+    .wf-faq-head { text-align: center; margin-bottom: 28px; }
+    .wf-faq-icon { width: 52px; height: 52px; background: #ddd; border: 2px solid #bbb; border-radius: 50%; margin: 0 auto 12px; }
+    .wf-faq-h2 { font-size: 32px; font-weight: 900; margin-bottom: 4px; }
+    .wf-faq-p { font-size: 11px; color: #888; }
+    .wf-faq-item { border: 1.5px solid #ccc; margin-bottom: 8px; background: #fff; }
+    .wf-faq-q { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; font-weight: bold; font-size: 12px; gap: 10px; }
+    .wf-faq-toggle { width: 24px; height: 24px; border: 1.5px solid #bbb; border-radius: 50%; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .wf-faq-open .wf-faq-toggle { background: #666; color: #fff; }
+    .wf-faq-a { padding: 0 16px 12px; font-size: 11px; color: #777; border-top: 1px solid #eee; padding-top: 8px; line-height: 1.6; }
+
+    /* ═══ CTA ═══ */
+    .wf-cta-wrap { padding: 32px 40px; border-bottom: 1.5px solid #ccc; }
+    .wf-cta-box { background: #ccc; border: 2px solid #999; padding: 44px 40px; display: flex; align-items: center; gap: 32px; max-width: 900px; margin: 0 auto; }
+    .wf-cta-icon { width: 40px; height: 40px; background: #aaa; border: 1px solid #888; border-radius: 4px; margin-bottom: 12px; }
+    .wf-cta-h2 { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 6px; }
+    .wf-cta-p { font-size: 12px; color: #555; }
+    .wf-cta-btn { flex-shrink: 0; display: flex; align-items: center; gap: 8px; padding: 18px 32px; border: 2px solid #888; background: #bbb; font-weight: 900; font-size: 13px; border-radius: 12px; }
+
+    /* ═══ FOOTER ═══ */
+    .wf-footer { background: #2a2a2a; color: #bbb; }
+    .wf-footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 0.8fr 1.2fr; gap: 28px; padding: 36px 40px; border-bottom: 1px solid #444; }
+    .wf-f-logo { font-size: 14px; font-weight: 900; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .wf-f-desc { font-size: 10px; color: #888; line-height: 1.6; margin-bottom: 12px; }
+    .wf-f-btn { display: inline-flex; align-items: center; gap: 5px; padding: 7px 14px; border: 1px solid #666; background: #444; color: #ccc; font-size: 10px; font-weight: bold; border-radius: 999px; }
+    .wf-f-col h4 { font-size: 9px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: #555; margin-bottom: 10px; }
+    .wf-f-col ul { list-style: none; }
+    .wf-f-col ul li { font-size: 11px; color: #888; margin-bottom: 6px; }
+    .wf-f-soc { display: flex; flex-direction: column; gap: 7px; }
+    .wf-f-soc-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #888; }
+    .wf-f-soc-icon { width: 24px; height: 24px; background: #3a3a3a; border: 1px solid #555; border-radius: 6px; flex-shrink: 0; }
+    .wf-footer-bottom { display: flex; justify-content: space-between; padding: 10px 40px; font-size: 10px; color: #555; }
+  </style>
+</head>
+<body>
+<div class="wf-page">
+
+  <!-- NAVBAR -->
+  <nav class="wf-nav">
+    <div class="wf-logo"><div class="wf-logo-icon"></div> MBTI Pakar</div>
+    <div class="wf-nav-pill">
+      <div class="wf-pill-item wf-pill-active">Beranda</div>
+      <div class="wf-pill-item">Cara Kerja</div>
+      <div class="wf-pill-item">16 Tipe</div>
+      <div class="wf-pill-item">FAQ</div>
+    </div>
+    <div class="wf-nav-right">
+      <div class="wf-circle-btn">☽</div>
+      <div class="wf-masuk-btn">↪ Masuk</div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="wf-hero">
+    <div class="wf-badge">✓ Sistem Pakar · Forward Chaining · 16 Tipe MBTI</div>
+    <div class="wf-h1">Kenali <em>Potensi</em><br>Dirimu.</div>
+    <div class="wf-sub">Kenali pola pikir dan potensi sejatimu hanya lewat 32 pertanyaan singkat.</div>
+    <div class="wf-hero-btns">
+      <div class="wf-btn-fill">▶ Ikuti Tes Gratis</div>
+      <div class="wf-btn-outline">Pelajari Lebih →</div>
+    </div>
+  </div>
+
+  <!-- MARQUEE (running text) -->
+  <div class="wf-marquee">
+    <div class="wf-marquee-inner">
+      <span>INTJ</span><span>INTP</span><span>ENTJ</span><span>ENTP</span>
+      <span>INFJ</span><span>INFP</span><span>ENFJ</span><span>ENFP</span>
+      <span>ISTJ</span><span>ISFJ</span><span>ESTJ</span><span>ESFJ</span>
+      <span>ISTP</span><span>ISFP</span><span>ESTP</span><span>ESFP</span>
+      <span>INTJ</span><span>INTP</span><span>ENTJ</span><span>ENTP</span>
+      <span>INFJ</span><span>INFP</span><span>ENFJ</span><span>ENFP</span>
+      <span>ISTJ</span><span>ISFJ</span><span>ESTJ</span><span>ESFJ</span>
+      <span>ISTP</span><span>ISFP</span><span>ESTP</span><span>ESFP</span>
+    </div>
+  </div>
+
+  <!-- CARA KERJA -->
+  <div class="wf-section">
+    <div class="wf-sec-title">Cara Kerja</div>
+    <div class="wf-sec-sub">3 langkah mudah untuk mengenal dirimu</div>
+    <div class="wf-cara-grid">
+      <div>
+        <div class="wf-step">
+          <div class="wf-step-num">01</div>
+          <div><h3>Buat Akun</h3><p>Masuk dengan akun Google dalam hitungan detik. Aman, cepat, tanpa isi form panjang.</p></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-step-num">02</div>
+          <div><h3>Jawab Jujur</h3><p>Jawab 32 pernyataan dengan percaya insting pertamamu — jangan terlalu lama berpikir.</p></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-step-num">03</div>
+          <div><h3>Terima Hasilmu</h3><p>Dapatkan tipe kepribadian lengkap beserta persentase dimensi E/I, S/N, T/F, J/P.</p></div>
+        </div>
+      </div>
+      <!-- DasborPreview -->
+      <div class="wf-preview">
+        <div class="wf-preview-head"><span>Hasil Tes Anda</span><span style="color:#aaa">12 Jun 2024</span></div>
+        <div class="wf-ptype">INTJ</div>
+        <div class="wf-pname">Sang Arsitek</div>
+        <div class="wf-pbar"><div class="wf-pbar-lbl">I</div><div class="wf-pbar-track"><div class="wf-pbar-fill" style="width:75%"></div></div><div class="wf-pbar-pct">75%</div></div>
+        <div class="wf-pbar"><div class="wf-pbar-lbl">N</div><div class="wf-pbar-track"><div class="wf-pbar-fill" style="width:68%"></div></div><div class="wf-pbar-pct">68%</div></div>
+        <div class="wf-pbar"><div class="wf-pbar-lbl">T</div><div class="wf-pbar-track"><div class="wf-pbar-fill" style="width:60%"></div></div><div class="wf-pbar-pct">60%</div></div>
+        <div class="wf-pbar"><div class="wf-pbar-lbl">J</div><div class="wf-pbar-track"><div class="wf-pbar-fill" style="width:80%"></div></div><div class="wf-pbar-pct">80%</div></div>
+        <div class="wf-preview-btn"><div>→ Lihat Detail Kepribadian</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 16 TIPE MBTI — KARTU BESAR + NAVIGASI (sesuai TipeMBTI.jsx) -->
+  <div class="wf-muted">
+    <div style="padding: 48px 40px;">
+      <div class="wf-sec-title">16 Tipe Kepribadian</div>
+      <div class="wf-sec-sub">Klik pada tipe untuk melihat penjelasan singkat</div>
+
+      <!-- Kartu Besar Aktif -->
+      <div class="wf-tipe-card">
+        <div class="wf-tipe-header">
+          <div>
+            <div class="wf-tipe-code">INTJ</div>
+            <div class="wf-tipe-julukan">Sang Arsitek</div>
+          </div>
+          <div class="wf-tipe-badge">1/16</div>
+        </div>
+        <div class="wf-tipe-desc">INTJ adalah pemikir imajinatif dan strategis, dengan rencana untuk segala sesuatunya. Mereka mandiri, analitis, dan memiliki standar yang sangat tinggi untuk diri sendiri dan orang lain.</div>
+        <div class="wf-tipe-tags">
+          <div class="wf-tag">I</div>
+          <div class="wf-tag">N</div>
+          <div class="wf-tag">T</div>
+          <div class="wf-tag">J</div>
+        </div>
+      </div>
+
+      <!-- Deretan Tombol Tipe (scrollable) -->
+      <div class="wf-tipe-scroll">
+        <div class="wf-tipe-btn active">INTJ</div>
+        <div class="wf-tipe-btn">INTP</div>
+        <div class="wf-tipe-btn">ENTJ</div>
+        <div class="wf-tipe-btn">ENTP</div>
+        <div class="wf-tipe-btn">INFJ</div>
+        <div class="wf-tipe-btn">INFP</div>
+        <div class="wf-tipe-btn">ENFJ</div>
+        <div class="wf-tipe-btn">ENFP</div>
+        <div class="wf-tipe-btn">ISTJ</div>
+        <div class="wf-tipe-btn">ISFJ</div>
+        <div class="wf-tipe-btn">ESTJ</div>
+        <div class="wf-tipe-btn">ESFJ</div>
+        <div class="wf-tipe-btn">ISTP</div>
+        <div class="wf-tipe-btn">ISFP</div>
+        <div class="wf-tipe-btn">ESTP</div>
+        <div class="wf-tipe-btn">ESFP</div>
+      </div>
+
+      <!-- Tombol Navigasi ← → -->
+      <div class="wf-tipe-nav">
+        <div class="wf-nav-circle">←</div>
+        <div class="wf-tipe-count">1 / 16</div>
+        <div class="wf-nav-circle">→</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div style="padding: 48px 40px; border-bottom: 1.5px solid #ccc;">
+    <div class="wf-faq-head">
+      <div class="wf-faq-icon"></div>
+      <div class="wf-faq-h2">Tanya Jawab</div>
+      <div class="wf-faq-p">Beberapa hal yang sering ditanyakan pengguna</div>
+    </div>
+    <div style="max-width: 720px; margin: 0 auto;">
+      <div class="wf-faq-item wf-faq-open">
+        <div class="wf-faq-q">Bagaimana cara kerja sistem ini? <div class="wf-faq-toggle">−</div></div>
+        <div class="wf-faq-a">Anda akan merespons 32 pernyataan. Sistem memproses menggunakan metode Forward Chaining untuk mendiagnosis kepribadian Anda.</div>
+      </div>
+      <div class="wf-faq-item"><div class="wf-faq-q">Apakah login dengan Google aman? Data apa saja yang diambil? <div class="wf-faq-toggle">+</div></div></div>
+      <div class="wf-faq-item"><div class="wf-faq-q">Mengapa saya harus login terlebih dahulu? <div class="wf-faq-toggle">+</div></div></div>
+      <div class="wf-faq-item"><div class="wf-faq-q">Bagaimana sistem memberikan penilaian akhir? <div class="wf-faq-toggle">+</div></div></div>
+      <div class="wf-faq-item"><div class="wf-faq-q">Apakah hasil tes ini dijamin akurat? <div class="wf-faq-toggle">+</div></div></div>
+      <div class="wf-faq-item"><div class="wf-faq-q">Web ini sebenarnya untuk apa? <div class="wf-faq-toggle">+</div></div></div>
+      <div class="wf-faq-item"><div class="wf-faq-q">Mengapa di profil ada form nomor telepon, jenis kelamin, pekerjaan? <div class="wf-faq-toggle">+</div></div></div>
+    </div>
+  </div>
+
+  <!-- CTA SECTION -->
+  <div class="wf-cta-wrap">
+    <div class="wf-cta-box">
+      <div style="flex:1">
+        <div class="wf-cta-icon"></div>
+        <div class="wf-cta-h2">Siap Mulai?</div>
+        <div class="wf-cta-p">Temukan kepribadian aslimu sekarang juga. Gratis, cepat, dan akurat.</div>
+      </div>
+      <div class="wf-cta-btn">▶ Mulai Sekarang</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="wf-footer">
+    <div class="wf-footer-grid">
+      <div>
+        <div class="wf-f-logo"><div style="width:18px;height:18px;background:#555;border-radius:3px;flex-shrink:0;"></div> MBTI Pakar</div>
+        <div class="wf-f-desc">Sistem Pakar berbasis Forward Chaining untuk deteksi 16 tipe kepribadian MBTI secara ilmiah.</div>
+        <div class="wf-f-btn">↪ Mulai Tes</div>
+      </div>
+      <div class="wf-f-col"><h4>Navigasi</h4><ul><li>Beranda</li><li>Cara Kerja</li><li>Tipe Kepribadian</li><li>Tanya Jawab</li></ul></div>
+      <div class="wf-f-col"><h4>Akses</h4><ul><li>Masuk</li></ul></div>
+      <div class="wf-f-col">
+        <h4>Sosial Media</h4>
+        <div class="wf-f-soc">
+          <div class="wf-f-soc-row"><div class="wf-f-soc-icon"></div> Instagram</div>
+          <div class="wf-f-soc-row"><div class="wf-f-soc-icon"></div> LinkedIn</div>
+          <div class="wf-f-soc-row"><div class="wf-f-soc-icon"></div> GitHub</div>
+        </div>
+      </div>
+    </div>
+    <div class="wf-footer-bottom">
+      <span>© 2024 · Dibuat oleh Muhammad Rafly Romeo Nasution</span>
+      <span>Sistem Pakar MBTI · Forward Chaining</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
