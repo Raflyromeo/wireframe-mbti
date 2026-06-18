@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframe 06 — Hasil Tes MBTI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f0f0f0; color: #222; font-size: 13px; }
+    .wf-app { display: flex; height: 100vh; max-width: 1200px; margin: 0 auto; background: #fafafa; border: 1.5px solid #ccc; overflow: hidden; }
+
+    /* ═══ SIDEBAR USER ═══ */
+    .wf-sidebar { width: 272px; flex-shrink: 0; border-right: 2px solid #ccc; background: #fff; display: flex; flex-direction: column; }
+    .wf-sid-logo { height: 64px; border-bottom: 2px solid #ccc; display: flex; align-items: center; gap: 8px; padding: 0 28px; }
+    .wf-sid-logo-icon { width: 20px; height: 20px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; border-radius: 3px; }
+    .wf-sid-logo-name { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: -0.5px; }
+    .wf-sid-menu { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; }
+    .wf-menu-item { display: flex; align-items: center; gap: 14px; padding: 11px 14px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; border: 2px solid transparent; border-radius: 999px; }
+    .wf-menu-item.active { background: #e0e0e0; border-color: #bbb; }
+    .wf-ico { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #aaa; background: #ddd; }
+    .wf-sid-footer { border-top: 2px solid #ccc; padding: 12px 16px; }
+    .wf-logout { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 2px solid transparent; border-radius: 999px; font-size: 12px; font-weight: bold; text-transform: uppercase; color: #c00; }
+    .wf-ico-red { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #c00; background: #fdd; }
+
+    /* ═══ MAIN ═══ */
+    .wf-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+    /* Header */
+    .wf-header { height: 64px; border-bottom: 2px solid #ccc; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0; }
+    .wf-header-left { display: flex; align-items: center; gap: 10px; }
+    .wf-panel-ico { width: 32px; height: 32px; border: 1.5px solid #ccc; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .wf-header-label { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; }
+    .wf-avatar-btn { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; }
+    .wf-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #bbb; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; }
+    .wf-avatar-info { display: flex; flex-direction: column; }
+    .wf-avatar-name { font-size: 12px; font-weight: 900; line-height: 1.1; }
+    .wf-avatar-role { font-size: 10px; font-weight: bold; text-transform: uppercase; color: #aaa; }
+
+    /* Content */
+    .wf-content { flex: 1; overflow-y: auto; padding: 28px 32px; display: flex; flex-direction: column; gap: 18px; }
+
+    /* Breadcrumb */
+    .wf-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 900; text-transform: uppercase; }
+    .wf-bc-icon { width: 14px; height: 14px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; }
+
+    /* Kartu Hasil Utama */
+    .wf-result-card { border: 2px solid #ccc; background: #e0e0e0; padding: 40px 28px; text-align: center; }
+    .wf-result-label { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 8px; }
+    .wf-result-type { font-size: 88px; font-weight: 900; letter-spacing: -4px; line-height: 0.9; margin-bottom: 18px; }
+    .wf-result-desc { font-size: 12px; color: #555; line-height: 1.6; max-width: 560px; margin: 0 auto; border-top: 2px solid #bbb; padding-top: 14px; }
+
+    /* Grid 2 kolom */
+    .wf-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    /* Kartu Dimensi */
+    .wf-card { border: 2px solid #ccc; background: #fff; padding: 22px; }
+    .wf-card-title { font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; margin-bottom: 16px; }
+    .wf-bar-row { margin-bottom: 14px; }
+    .wf-bar-labels { display: flex; justify-content: space-between; font-size: 10px; font-weight: 900; text-transform: uppercase; margin-bottom: 5px; }
+    .wf-bar-track { width: 100%; height: 26px; background: #e8e8e8; border: 1.5px solid #ccc; display: flex; overflow: hidden; }
+    .wf-bar-a { background: #aaa; height: 100%; border-right: 1.5px solid #888; }
+    .wf-bar-b { background: #d8d8d8; height: 100%; }
+    .wf-kamus { margin-top: 16px; border-top: 2px solid #eee; padding-top: 14px; }
+    .wf-kamus-title { font-size: 11px; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; }
+    .wf-kamus-list { list-style: disc; padding-left: 16px; }
+    .wf-kamus-list li { font-size: 10px; color: #666; margin-bottom: 6px; line-height: 1.5; }
+
+    /* Kartu Saran */
+    .wf-saran-card { border: 2px solid #ccc; background: #e4e4e4; padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+    .wf-saran-icon-row { display: flex; align-items: center; gap: 8px; }
+    .wf-saran-icon { width: 24px; height: 24px; background: #bbb; border: 1px solid #aaa; flex-shrink: 0; }
+    .wf-saran-text { font-size: 12px; color: #555; line-height: 1.6; font-weight: bold; }
+    .wf-divider { height: 1.5px; background: #bbb; }
+    .wf-aksi-desc { font-size: 11px; color: #666; line-height: 1.5; }
+    .wf-aksi-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px; border: 2px solid #888; background: #555; color: #fff; font-weight: 900; font-size: 12px; }
+    .wf-aksi-btn.outline { background: #f0f0f0; color: #333; }
+    .wf-aksi-icon { width: 14px; height: 14px; background: #bbb; border: 1px solid #999; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+<div class="wf-app">
+
+  <!-- SIDEBAR USER -->
+  <aside class="wf-sidebar">
+    <div class="wf-sid-logo">
+      <div class="wf-sid-logo-icon"></div><!-- BrainCircuit icon -->
+      <div class="wf-sid-logo-name">MBTI Pakar</div>
+    </div>
+    <div class="wf-sid-menu">
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- LayoutDashboard -->
+        Ringkasan
+      </div>
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- FileText -->
+        Mulai Tes
+      </div>
+      <div class="wf-menu-item active">
+        <div class="wf-ico"></div><!-- ActivitySquare -->
+        Riwayat Hasil
+      </div>
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- User -->
+        Pengaturan Profil
+      </div>
+    </div>
+    <div class="wf-sid-footer">
+      <div class="wf-logout">
+        <div class="wf-ico-red"></div><!-- LogOut -->
+        Keluar
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="wf-main">
+    <!-- Header -->
+    <header class="wf-header">
+      <div class="wf-header-left">
+        <div class="wf-panel-ico">≡</div><!-- PanelLeftClose -->
+        <div class="wf-header-label">Dasbor Pengguna</div>
+      </div>
+      <div class="wf-avatar-btn">
+        <div class="wf-avatar">R</div>
+        <div class="wf-avatar-info">
+          <div class="wf-avatar-name">Muhammad Ra...</div>
+          <div class="wf-avatar-role">User</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="wf-content">
+      <!-- Breadcrumb: Home › Riwayat Hasil -->
+      <div class="wf-breadcrumb">
+        <div class="wf-bc-icon"></div><!-- Home icon -->
+        Dasbor
+        <span style="color:#aaa; margin:0 2px;">›</span>
+        <span style="text-decoration:underline; color:#666;">Riwayat Hasil</span>
+      </div>
+
+      <!-- Kartu Hasil Utama -->
+      <div class="wf-result-card">
+        <div class="wf-result-label">Tipe Kepribadian Anda</div>
+        <div class="wf-result-type">INTJ</div>
+        <div class="wf-result-desc">
+          INTJ adalah pemikir imajinatif dan strategis, dengan rencana untuk segala sesuatunya. Mereka mandiri, analitis, dan memiliki standar yang sangat tinggi untuk diri sendiri dan orang lain.
+        </div>
+      </div>
+
+      <!-- Grid Dimensi + Saran -->
+      <div class="wf-grid2">
+        <!-- Kartu Rincian Dimensi -->
+        <div class="wf-card">
+          <div class="wf-card-title">Rincian Dimensi</div>
+          <div class="wf-bar-row">
+            <div class="wf-bar-labels"><span>E (25%)</span><span>I (75%)</span></div>
+            <div class="wf-bar-track"><div class="wf-bar-a" style="width:25%"></div><div class="wf-bar-b" style="width:75%"></div></div>
+          </div>
+          <div class="wf-bar-row">
+            <div class="wf-bar-labels"><span>S (32%)</span><span>N (68%)</span></div>
+            <div class="wf-bar-track"><div class="wf-bar-a" style="width:32%"></div><div class="wf-bar-b" style="width:68%"></div></div>
+          </div>
+          <div class="wf-bar-row">
+            <div class="wf-bar-labels"><span>T (60%)</span><span>F (40%)</span></div>
+            <div class="wf-bar-track"><div class="wf-bar-a" style="width:60%"></div><div class="wf-bar-b" style="width:40%"></div></div>
+          </div>
+          <div class="wf-bar-row">
+            <div class="wf-bar-labels"><span>J (80%)</span><span>P (20%)</span></div>
+            <div class="wf-bar-track"><div class="wf-bar-a" style="width:80%"></div><div class="wf-bar-b" style="width:20%"></div></div>
+          </div>
+          <div class="wf-kamus">
+            <div class="wf-kamus-title">Kamus Dimensi MBTI</div>
+            <ul class="wf-kamus-list">
+              <li><strong>E vs I:</strong> Fokus perhatian & energi. Extrovert dari interaksi; Introvert dari waktu sendiri.</li>
+              <li><strong>S vs N:</strong> Cara menerima informasi. Sensing berfokus fakta; Intuition pada pola.</li>
+              <li><strong>T vs F:</strong> Cara keputusan. Thinking = logika; Feeling = nilai & empati.</li>
+              <li><strong>J vs P:</strong> Gaya hidup. Judging = terstruktur; Perceiving = fleksibel.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Kartu Saran Pengembangan -->
+        <div class="wf-saran-card">
+          <div class="wf-saran-icon-row">
+            <div class="wf-saran-icon"></div><!-- Lightbulb icon -->
+            <div class="wf-card-title" style="margin:0;">Saran Pengembangan</div>
+          </div>
+          <div class="wf-saran-text">
+            Sebagai INTJ, Anda memiliki kemampuan analitis luar biasa. Perluas kemampuan interpersonal, belajar lebih fleksibel dalam situasi tidak pasti, dan gunakan kemampuan visioner untuk memimpin dengan empati.
+          </div>
+          <div class="wf-divider"></div>
+          <div class="wf-card-title" style="font-size:12px; margin:0;">Aksi Lanjutan</div>
+          <div class="wf-aksi-desc">Unduh hasil tes Anda sebagai file PDF atau ulangi kuesioner jika Anda merasa ada yang kurang tepat.</div>
+          <div class="wf-aksi-btn">
+            <div class="wf-aksi-icon"></div><!-- Download icon -->
+            Unduh Laporan PDF
+          </div>
+          <div class="wf-aksi-btn outline">
+            <div class="wf-aksi-icon"></div><!-- RotateCcw icon -->
+            Ulangi Tes
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
