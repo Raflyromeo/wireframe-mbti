@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframe 04 — Profil User</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f0f0f0; color: #222; font-size: 13px; }
+    .wf-app { display: flex; height: 100vh; max-width: 1200px; margin: 0 auto; background: #fafafa; border: 1.5px solid #ccc; overflow: hidden; }
+
+    /* ═══ SIDEBAR USER ═══ */
+    .wf-sidebar { width: 272px; flex-shrink: 0; border-right: 2px solid #ccc; background: #fff; display: flex; flex-direction: column; }
+    .wf-sid-logo { height: 64px; border-bottom: 2px solid #ccc; display: flex; align-items: center; gap: 8px; padding: 0 28px; }
+    .wf-sid-logo-icon { width: 20px; height: 20px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; border-radius: 3px; }
+    .wf-sid-logo-name { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: -0.5px; }
+    .wf-sid-menu { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; }
+    .wf-menu-item { display: flex; align-items: center; gap: 14px; padding: 11px 14px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; border: 2px solid transparent; border-radius: 999px; }
+    .wf-menu-item.active { background: #e0e0e0; border-color: #bbb; }
+    .wf-ico { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #aaa; background: #ddd; }
+    .wf-sid-footer { border-top: 2px solid #ccc; padding: 12px 16px; }
+    .wf-logout { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 2px solid transparent; border-radius: 999px; font-size: 12px; font-weight: bold; text-transform: uppercase; color: #c00; }
+    .wf-ico-red { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #c00; background: #fdd; }
+
+    /* ═══ MAIN ═══ */
+    /* min-height: 0 wajib agar flex child bisa shrink & scroll aktif */
+    .wf-main { flex: 1; min-height: 0; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .wf-header { height: 64px; border-bottom: 2px solid #ccc; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0; }
+    .wf-header-left { display: flex; align-items: center; gap: 10px; }
+    .wf-panel-ico { width: 32px; height: 32px; border: 1.5px solid #ccc; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .wf-header-label { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; }
+    .wf-avatar-btn { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; }
+    .wf-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #bbb; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; }
+    .wf-avatar-info { display: flex; flex-direction: column; }
+    .wf-avatar-name { font-size: 12px; font-weight: 900; line-height: 1.1; }
+    .wf-avatar-role { font-size: 10px; font-weight: bold; text-transform: uppercase; color: #aaa; }
+
+    /* Content — block layout agar overflow-y: auto benar-benar aktif */
+    .wf-content { flex: 1; min-height: 0; overflow-y: scroll; overflow-x: hidden; padding: 24px 28px 40px; background: #ebebeb; }
+    .wf-content > * + * { margin-top: 18px; }
+
+    /* Breadcrumb: Home > Profil */
+    .wf-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 900; text-transform: uppercase; }
+    .wf-bc-icon { width: 14px; height: 14px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; }
+
+    /* ═══ KARTU PROFIL ═══ */
+    .wf-card { background: #fff; border: 2px solid #bbb; padding: 28px; max-width: 700px; position: relative; overflow: hidden; }
+    /* Watermark User icon di pojok kanan atas */
+    .wf-watermark { position: absolute; top: 0; right: 0; padding: 20px; opacity: 0.05; }
+    .wf-watermark-icon { width: 140px; height: 140px; background: #333; border-radius: 50%; }
+    /* Judul & deskripsi */
+    .wf-card-title { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 6px; position: relative; z-index: 1; }
+    .wf-card-desc { font-size: 12px; color: #666; margin-bottom: 24px; line-height: 1.5; position: relative; z-index: 1; }
+    /* Foto Profil */
+    .wf-foto-section { margin-bottom: 24px; position: relative; z-index: 1; }
+    .wf-foto-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: block; }
+    .wf-foto-row { display: flex; align-items: center; gap: 14px; }
+    /* Avatar besar (80px) dengan foto placeholder bergaris X */
+    .wf-avatar-lg {
+      width: 80px; height: 80px; border: 2px solid #bbb; border-radius: 50%; flex-shrink: 0;
+      background: #e0e0e0; position: relative; overflow: hidden;
+    }
+    .wf-avatar-lg::before, .wf-avatar-lg::after {
+      content: ''; position: absolute; width: 140%; height: 1.5px;
+      background: #bbb; left: -20%; top: 50%;
+    }
+    .wf-avatar-lg::before { transform: rotate(35deg); }
+    .wf-avatar-lg::after  { transform: rotate(-35deg); }
+    .wf-foto-actions { display: flex; flex-direction: column; gap: 6px; }
+    /* Tombol Pilih Foto */
+    .wf-btn-foto { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1.5px solid #aaa; background: #ddd; font-size: 11px; font-weight: 900; }
+    .wf-btn-foto-ico { width: 12px; height: 12px; background: #999; border: 1px solid #888; flex-shrink: 0; }
+    /* Tombol Hapus Foto */
+    .wf-btn-hapus { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1.5px solid #bbb; background: #e0e0e0; font-size: 11px; font-weight: 900; color: #666; }
+    .wf-foto-note { font-size: 10px; color: #aaa; font-weight: bold; }
+
+    /* Form Grid */
+    .wf-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; position: relative; z-index: 1; }
+    .wf-form-group { display: flex; flex-direction: column; gap: 5px; }
+    .wf-form-group.full { grid-column: 1 / -1; }
+    .wf-label { font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+    .wf-label-note { font-size: 9px; font-weight: normal; color: #aaa; text-transform: none; margin-left: 3px; }
+    /* Input / Select / Textarea */
+    .wf-input { padding: 10px 12px; border: 1.5px solid #ccc; background: #fff; font-size: 12px; font-weight: bold; min-height: 42px; }
+    .wf-input.disabled { background: #f2f2f2; color: #aaa; display: flex; align-items: center; gap: 6px; }
+    .wf-mail-ico { width: 14px; height: 14px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; }
+    .wf-input-ph { color: #bbb; font-weight: normal; }
+    .wf-select { padding: 10px 12px; border: 1.5px solid #ccc; background: #fff; font-size: 12px; min-height: 42px; display: flex; align-items: center; justify-content: space-between; }
+    .wf-date-input { padding: 10px 12px; border: 1.5px solid #ccc; background: #fff; font-size: 12px; min-height: 42px; display: flex; align-items: center; justify-content: space-between; }
+    .wf-date-ico { width: 14px; height: 14px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; }
+    .wf-textarea { padding: 10px 12px; border: 1.5px solid #ccc; background: #fff; font-size: 12px; min-height: 72px; resize: none; color: #bbb; }
+    /* Tombol Simpan */
+    .wf-save-wrap { display: flex; justify-content: flex-end; padding-top: 12px; position: relative; z-index: 1; }
+    .wf-save-btn { display: flex; align-items: center; gap: 8px; padding: 14px 28px; border: 2px solid #888; background: #e0e0e0; font-weight: 900; font-size: 14px; }
+    .wf-save-ico { width: 16px; height: 16px; background: #bbb; border: 1px solid #999; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+<div class="wf-app">
+
+  <!-- SIDEBAR USER -->
+  <aside class="wf-sidebar">
+    <div class="wf-sid-logo">
+      <div class="wf-sid-logo-icon"></div><!-- BrainCircuit -->
+      <div class="wf-sid-logo-name">MBTI Pakar</div>
+    </div>
+    <div class="wf-sid-menu">
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- LayoutDashboard -->
+        Ringkasan
+      </div>
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- FileText -->
+        Mulai Tes
+      </div>
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- ActivitySquare -->
+        Riwayat Hasil
+      </div>
+      <div class="wf-menu-item active">
+        <div class="wf-ico"></div><!-- User -->
+        Pengaturan Profil
+      </div>
+    </div>
+    <div class="wf-sid-footer">
+      <div class="wf-logout">
+        <div class="wf-ico-red"></div><!-- LogOut -->
+        Keluar
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="wf-main">
+    <!-- Header -->
+    <header class="wf-header">
+      <div class="wf-header-left">
+        <div class="wf-panel-ico">≡</div><!-- PanelLeftClose -->
+        <div class="wf-header-label">Dasbor Pengguna</div>
+      </div>
+      <div class="wf-avatar-btn">
+        <div class="wf-avatar">R</div>
+        <div class="wf-avatar-info">
+          <div class="wf-avatar-name">Muhammad Ra...</div>
+          <div class="wf-avatar-role">User</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="wf-content">
+      <!-- Breadcrumb: Home › Profil -->
+      <div class="wf-breadcrumb">
+        <div class="wf-bc-icon"></div><!-- Home -->
+        Dasbor
+        <span style="color:#aaa; margin:0 2px;">›</span>
+        <span style="text-decoration:underline; color:#666;">Profil</span>
+      </div>
+
+      <!-- Kartu Profil Saya -->
+      <div class="wf-card">
+        <!-- Watermark User icon (pojok kanan atas) -->
+        <div class="wf-watermark">
+          <div class="wf-watermark-icon"></div><!-- User icon besar, opacity 5% -->
+        </div>
+
+        <div class="wf-card-title">Profil Saya</div>
+        <div class="wf-card-desc">Lengkapi data diri Anda agar hasil tes MBTI bisa disesuaikan dengan latar belakang Anda.</div>
+
+        <!-- FOTO PROFIL -->
+        <div class="wf-foto-section">
+          <span class="wf-foto-label">Foto Profil</span>
+          <div class="wf-foto-row">
+            <!-- Avatar dengan placeholder X -->
+            <div class="wf-avatar-lg"></div>
+            <div class="wf-foto-actions">
+              <!-- Tombol Pilih Foto (Upload icon) -->
+              <div class="wf-btn-foto">
+                <div class="wf-btn-foto-ico"></div><!-- Upload icon -->
+                Pilih Foto
+              </div>
+              <!-- Tombol Hapus Foto (X icon) -->
+              <div class="wf-btn-hapus">
+                <div class="wf-btn-foto-ico"></div><!-- X icon -->
+                Hapus Foto
+              </div>
+              <div class="wf-foto-note">JPG, PNG, WEBP (maks. 2MB)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Fields (Grid 2 kolom) -->
+        <div class="wf-form-grid">
+
+          <!-- NAMA LENGKAP -->
+          <div class="wf-form-group">
+            <div class="wf-label">Nama Lengkap</div>
+            <div class="wf-input">Muhammad Rafly Romeo Nasution</div>
+          </div>
+
+          <!-- EMAIL (readonly) -->
+          <div class="wf-form-group">
+            <div class="wf-label">Email <span class="wf-label-note">(dari akun Google, tidak bisa diubah)</span></div>
+            <div class="wf-input disabled">
+              <div class="wf-mail-ico"></div><!-- Mail icon -->
+              raflyromeonasution07@gmail.com
+            </div>
+          </div>
+
+          <!-- USERNAME -->
+          <div class="wf-form-group">
+            <div class="wf-label">Username <span class="wf-label-note">(huruf kecil, tanpa spasi)</span></div>
+            <div class="wf-input"><span class="wf-input-ph">Cth: raflygantengbanget</span></div>
+          </div>
+
+          <!-- NOMOR TELEPON -->
+          <div class="wf-form-group">
+            <div class="wf-label">Nomor Telepon</div>
+            <div class="wf-input"><span class="wf-input-ph">Cth: 08123456789</span></div>
+          </div>
+
+          <!-- TANGGAL LAHIR (NeoDatePicker) -->
+          <div class="wf-form-group">
+            <div class="wf-label">Tanggal Lahir</div>
+            <div class="wf-date-input">
+              <span>23 Mei 2005</span>
+              <div class="wf-date-ico"></div><!-- Calendar icon -->
+            </div>
+          </div>
+
+          <!-- JENIS KELAMIN (NeoSelect) -->
+          <div class="wf-form-group">
+            <div class="wf-label">Jenis Kelamin</div>
+            <div class="wf-select">
+              <span>Laki-laki</span>
+              <span>▾</span>
+            </div>
+          </div>
+
+          <!-- PEKERJAAN (full width) -->
+          <div class="wf-form-group full">
+            <div class="wf-label">Pekerjaan</div>
+            <div class="wf-input"><span class="wf-input-ph">Cth: Mahasiswa / Software Engineer</span></div>
+          </div>
+
+          <!-- ALAMAT LENGKAP (textarea, full width) -->
+          <div class="wf-form-group full">
+            <div class="wf-label">Alamat Lengkap</div>
+            <div class="wf-textarea"><span class="wf-input-ph">Cth: Jl. Raya Pekayon</span></div>
+          </div>
+
+        </div>
+
+        <!-- Tombol Simpan Profil (align right, bg aksen/kuning) -->
+        <div class="wf-save-wrap">
+          <div class="wf-save-btn">
+            <div class="wf-save-ico"></div><!-- Save icon -->
+            Simpan Profil
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
