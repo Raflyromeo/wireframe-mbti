@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframe 07 — Autentikasi Admin (Akses Pakar)</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #e8e8e8; color: #222; font-size: 13px; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .wf-dots { position: fixed; inset: 0; background-image: radial-gradient(#bbb 1px, transparent 1px); background-size: 18px 18px; opacity: 0.15; pointer-events: none; }
+    .wf-blob1 { position: fixed; width: 300px; height: 300px; border-radius: 50%; background: #ddd; opacity: 0.4; top: -70px; right: -70px; pointer-events: none; }
+    .wf-blob2 { position: fixed; width: 300px; height: 300px; border-radius: 50%; background: #ddd; opacity: 0.3; bottom: -70px; left: -70px; pointer-events: none; }
+    .wf-wrap { width: 440px; position: relative; z-index: 1; }
+    /* ← Kembali ke Beranda */
+    .wf-back { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+    .wf-back-icon { width: 14px; height: 14px; background: #bbb; border: 1px solid #999; flex-shrink: 0; }
+    /* Kartu Admin (lebih gelap/teal latar) */
+    .wf-card { background: #ccc; border: 2px solid #bbb; padding: 36px; }
+    .wf-card-title { font-size: 24px; font-weight: 900; text-align: center; margin-bottom: 8px; }
+    .wf-card-desc { font-size: 11px; color: #555; text-align: center; margin-bottom: 28px; line-height: 1.5; }
+    /* Form */
+    .wf-form-group { margin-bottom: 18px; }
+    .wf-label { display: block; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+    .wf-input { width: 100%; padding: 11px 12px; border: 1.5px solid #aaa; background: #fff; font-size: 12px; }
+    .wf-input-wrap { position: relative; }
+    .wf-eye-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; background: #ccc; border: 1px solid #aaa; }
+    .wf-submit { width: 100%; padding: 14px; border: 2px solid #888; background: #555; color: #fff; font-weight: 900; font-size: 13px; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div class="wf-dots"></div>
+  <div class="wf-blob1"></div>
+  <div class="wf-blob2"></div>
+  <div class="wf-wrap">
+    <!-- ← Kembali -->
+    <div class="wf-back">
+      <div class="wf-back-icon"></div><!-- ArrowLeft icon -->
+      Kembali ke Beranda
+    </div>
+    <!-- Kartu -->
+    <div class="wf-card">
+      <div class="wf-card-title">Akses Pakar</div>
+      <div class="wf-card-desc">Hanya staf pakar/admin yang diperbolehkan mengakses halaman ini.</div>
+      <!-- Username -->
+      <div class="wf-form-group">
+        <div class="wf-label">Username Admin</div>
+        <div class="wf-input" style="color:#aaa">adminmbti</div>
+      </div>
+      <!-- Password -->
+      <div class="wf-form-group">
+        <div class="wf-label">Kata Sandi</div>
+        <div class="wf-input-wrap">
+          <div class="wf-input" style="color:#aaa; letter-spacing:4px;">••••••••••••</div>
+          <div class="wf-eye-btn"></div><!-- Eye / EyeOff icon -->
+        </div>
+      </div>
+      <!-- Tombol Submit -->
+      <div class="wf-submit">Masuk ke Panel</div>
+    </div>
+  </div>
+</body>
+</html>
