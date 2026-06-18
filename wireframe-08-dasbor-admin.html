@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframe 08 — Dasbor Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f0f0f0; color: #222; font-size: 13px; }
+    .wf-app { display: flex; height: 100vh; max-width: 1200px; margin: 0 auto; background: #fafafa; border: 1.5px solid #ccc; overflow: hidden; }
+
+    /* ═══ SIDEBAR ADMIN ═══ */
+    .wf-sidebar { width: 272px; flex-shrink: 0; border-right: 2px solid #444; background: #fff; display: flex; flex-direction: column; }
+    /* Logo (BrainCircuit + "Panel Pakar") */
+    .wf-sid-logo { height: 64px; border-bottom: 2px solid #ccc; display: flex; align-items: center; gap: 8px; padding: 0 28px; }
+    .wf-sid-logo-icon { width: 20px; height: 20px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; border-radius: 3px; }
+    .wf-sid-logo-name { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: -0.5px; }
+    /* Menu */
+    .wf-sid-menu { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; }
+    .wf-menu-item { display: flex; align-items: center; gap: 14px; padding: 11px 14px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; border: 2px solid transparent; border-radius: 999px; }
+    .wf-menu-item.active { background: #e0e0e0; border-color: #bbb; }
+    .wf-ico { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #aaa; background: #ddd; }
+    /* Logout */
+    .wf-sid-footer { border-top: 2px solid #ccc; padding: 12px 16px; }
+    .wf-logout { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 2px solid transparent; border-radius: 999px; font-size: 12px; font-weight: bold; text-transform: uppercase; color: #c00; }
+    .wf-ico-red { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #c00; background: #fdd; }
+
+    /* ═══ MAIN ═══ */
+    .wf-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+    /* Header Admin: PanelLeftClose + "Panel Admin" | Avatar+nama+dropdown */
+    .wf-header { height: 64px; border-bottom: 2px solid #ccc; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0; }
+    .wf-header-left { display: flex; align-items: center; gap: 10px; }
+    .wf-panel-ico { width: 32px; height: 32px; border: 1.5px solid #ccc; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .wf-header-label { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; }
+    /* Avatar kanan */
+    .wf-avatar-btn { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; border: 1.5px solid transparent; }
+    .wf-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #bbb; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; }
+    .wf-avatar-info { display: flex; flex-direction: column; }
+    .wf-avatar-name { font-size: 12px; font-weight: 900; line-height: 1.1; }
+    .wf-avatar-role { font-size: 10px; font-weight: bold; text-transform: uppercase; color: #aaa; }
+    /* Content */
+    .wf-content { flex: 1; overflow-y: auto; padding: 28px; display: flex; flex-direction: column; gap: 24px; }
+    .wf-page-title { font-size: 32px; font-weight: 900; letter-spacing: -1px; }
+    /* Stat cards (3 kolom) */
+    .wf-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .wf-stat-card { border: 2px solid #ccc; padding: 20px; display: flex; align-items: center; gap: 16px; background: #fff; }
+    .wf-stat-icon { width: 52px; height: 52px; background: #e0e0e0; border: 2px solid #ccc; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .wf-stat-ico-ph { width: 24px; height: 24px; background: #bbb; border: 1px solid #aaa; border-radius: 2px; }
+    .wf-stat-label { font-size: 10px; font-weight: 900; text-transform: uppercase; color: #888; margin-bottom: 4px; letter-spacing: 0.5px; }
+    .wf-stat-val { font-size: 32px; font-weight: 900; }
+    /* Petunjuk card */
+    .wf-info-card { border: 2px solid #ccc; background: #fff; padding: 22px; }
+    .wf-info-title { font-size: 16px; font-weight: 900; margin-bottom: 10px; }
+    .wf-info-text { font-size: 12px; color: #666; margin-bottom: 12px; line-height: 1.5; }
+    .wf-info-list { list-style: disc; padding-left: 18px; }
+    .wf-info-list li { font-size: 12px; color: #666; margin-bottom: 6px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+<div class="wf-app">
+  <!-- SIDEBAR ADMIN -->
+  <aside class="wf-sidebar">
+    <div class="wf-sid-logo">
+      <div class="wf-sid-logo-icon"></div><!-- BrainCircuit -->
+      <div class="wf-sid-logo-name">Panel Pakar</div>
+    </div>
+    <div class="wf-sid-menu">
+      <!-- LayoutDashboard → Ringkasan (active) -->
+      <div class="wf-menu-item active">
+        <div class="wf-ico"></div><!-- LayoutDashboard -->
+        Ringkasan
+      </div>
+      <!-- ListTodo → Soal / Sikap -->
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- ListTodo -->
+        Soal / Sikap
+      </div>
+    </div>
+    <div class="wf-sid-footer">
+      <div class="wf-logout">
+        <div class="wf-ico-red"></div><!-- LogOut -->
+        Keluar
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="wf-main">
+    <!-- Header -->
+    <header class="wf-header">
+      <div class="wf-header-left">
+        <div class="wf-panel-ico">≡</div><!-- PanelLeftClose -->
+        <div class="wf-header-label">Panel Admin</div>
+      </div>
+      <div class="wf-avatar-btn">
+        <div class="wf-avatar">A</div>
+        <div class="wf-avatar-info">
+          <div class="wf-avatar-name">Admin</div>
+          <div class="wf-avatar-role">Admin</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="wf-content">
+      <div class="wf-page-title">Ringkasan Sistem</div>
+
+      <!-- 3 Stat Cards: Users, FileQuestion, ActivitySquare -->
+      <div class="wf-stat-grid">
+        <div class="wf-stat-card">
+          <div class="wf-stat-icon"><div class="wf-stat-ico-ph"></div></div><!-- Users icon -->
+          <div>
+            <div class="wf-stat-label">Total Pengguna</div>
+            <div class="wf-stat-val">1.245</div>
+          </div>
+        </div>
+        <div class="wf-stat-card">
+          <div class="wf-stat-icon"><div class="wf-stat-ico-ph"></div></div><!-- FileQuestion icon -->
+          <div>
+            <div class="wf-stat-label">Total Soal</div>
+            <div class="wf-stat-val">32</div>
+          </div>
+        </div>
+        <div class="wf-stat-card">
+          <div class="wf-stat-icon"><div class="wf-stat-ico-ph"></div></div><!-- ActivitySquare icon -->
+          <div>
+            <div class="wf-stat-label">Tes Diselesaikan</div>
+            <div class="wf-stat-val">3.892</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Petunjuk Admin -->
+      <div class="wf-info-card">
+        <div class="wf-info-title">Petunjuk Admin</div>
+        <div class="wf-info-text">Selamat datang di Panel Pakar MBTI. Di sini Anda dapat mengelola basis pengetahuan untuk sistem pakar Anda.</div>
+        <ul class="wf-info-list">
+          <li>Arahkan ke menu <strong>Soal / Sikap</strong> untuk menambah, mengedit, atau menghapus pertanyaan MBTI.</li>
+          <li>Pastikan Anda telah memasukkan nilai (E/I, S/N, T/F, J/P) dengan benar pada setiap opsi.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
