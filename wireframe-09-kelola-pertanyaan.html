@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframe 09 — Kelola Soal (Admin)</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f0f0f0; color: #222; font-size: 13px; }
+    .wf-app { display: flex; height: 100vh; max-width: 1200px; margin: 0 auto; background: #fafafa; border: 1.5px solid #ccc; overflow: hidden; }
+    /* SIDEBAR ADMIN — sama persis wireframe-08 */
+    .wf-sidebar { width: 272px; flex-shrink: 0; border-right: 2px solid #ccc; background: #fff; display: flex; flex-direction: column; }
+    .wf-sid-logo { height: 64px; border-bottom: 2px solid #ccc; display: flex; align-items: center; gap: 8px; padding: 0 28px; }
+    .wf-sid-logo-icon { width: 20px; height: 20px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; border-radius: 3px; }
+    .wf-sid-logo-name { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: -0.5px; }
+    .wf-sid-menu { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; }
+    .wf-menu-item { display: flex; align-items: center; gap: 14px; padding: 11px 14px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; border: 2px solid transparent; border-radius: 999px; }
+    .wf-menu-item.active { background: #e0e0e0; border-color: #bbb; }
+    .wf-ico { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #aaa; background: #ddd; }
+    .wf-sid-footer { border-top: 2px solid #ccc; padding: 12px 16px; }
+    .wf-logout { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 2px solid transparent; border-radius: 999px; font-size: 12px; font-weight: bold; text-transform: uppercase; color: #c00; }
+    .wf-ico-red { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #c00; background: #fdd; }
+    /* MAIN */
+    .wf-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+    .wf-header { height: 64px; border-bottom: 2px solid #ccc; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0; }
+    .wf-header-left { display: flex; align-items: center; gap: 10px; }
+    .wf-panel-ico { width: 32px; height: 32px; border: 1.5px solid #ccc; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .wf-header-label { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; }
+    .wf-avatar-btn { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; }
+    .wf-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #bbb; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; }
+    .wf-avatar-info { display: flex; flex-direction: column; }
+    .wf-avatar-name { font-size: 12px; font-weight: 900; line-height: 1.1; }
+    .wf-avatar-role { font-size: 10px; font-weight: bold; text-transform: uppercase; color: #aaa; }
+    /* Content */
+    .wf-content { flex: 1; overflow-y: auto; padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+    .wf-page-title { font-size: 32px; font-weight: 900; letter-spacing: -1px; }
+    /* Form Tambah Soal (bg lebih gelap sesuai bg-[var(--kedua)]) */
+    .wf-form-card { border: 2px solid #bbb; background: #ddd; padding: 22px; }
+    .wf-form-title { font-size: 15px; font-weight: 900; margin-bottom: 14px; }
+    .wf-form-group { margin-bottom: 12px; }
+    .wf-label { display: block; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+    .wf-input { width: 100%; padding: 10px 12px; border: 1.5px solid #aaa; background: #fff; font-size: 12px; }
+    .wf-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .wf-sub-label { font-size: 9px; font-weight: 900; text-transform: uppercase; color: #888; margin-top: 6px; margin-bottom: 4px; display: block; }
+    /* NeoSelect mock */
+    .wf-select { width: 100%; padding: 10px 12px; border: 1.5px solid #aaa; background: #fff; font-size: 12px; display: flex; justify-content: space-between; align-items: center; }
+    /* Tombol Simpan (Plus icon + text) */
+    .wf-save-btn { display: flex; align-items: center; gap: 8px; padding: 11px 20px; border: 2px solid #888; background: #555; color: #fff; font-weight: 900; font-size: 12px; }
+    .wf-btn-ico { width: 14px; height: 14px; background: #bbb; border: 1px solid #999; flex-shrink: 0; }
+    /* Daftar Soal */
+    .wf-list-head { font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
+    .wf-soal-card { border: 2px solid #ccc; background: #fff; padding: 16px; display: flex; align-items: flex-start; gap: 14px; }
+    .wf-soal-body { flex: 1; min-width: 0; }
+    .wf-soal-num { display: inline-block; font-size: 9px; font-weight: 900; text-transform: uppercase; background: #e0e0e0; border: 1px solid #bbb; padding: 2px 7px; margin-right: 6px; }
+    .wf-soal-q { font-weight: bold; font-size: 13px; display: inline; }
+    .wf-opsi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .wf-opsi-box { border: 1.5px solid #ccc; padding: 8px 10px; background: #f5f5f5; }
+    .wf-opsi-lbl { font-size: 9px; font-weight: 900; text-transform: uppercase; color: #888; margin-bottom: 3px; }
+    .wf-opsi-val { font-size: 11px; font-weight: bold; line-height: 1.4; }
+    /* Tombol Hapus (Trash2 icon) */
+    .wf-hapus-btn { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: 1.5px solid #bbb; background: #f0f0f0; flex-shrink: 0; }
+    .wf-trash-ico { width: 14px; height: 14px; background: #bbb; border: 1px solid #aaa; }
+  </style>
+</head>
+<body>
+<div class="wf-app">
+  <!-- SIDEBAR ADMIN -->
+  <aside class="wf-sidebar">
+    <div class="wf-sid-logo">
+      <div class="wf-sid-logo-icon"></div><!-- BrainCircuit -->
+      <div class="wf-sid-logo-name">Panel Pakar</div>
+    </div>
+    <div class="wf-sid-menu">
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- LayoutDashboard -->
+        Ringkasan
+      </div>
+      <div class="wf-menu-item active">
+        <div class="wf-ico"></div><!-- ListTodo -->
+        Soal / Sikap
+      </div>
+    </div>
+    <div class="wf-sid-footer">
+      <div class="wf-logout">
+        <div class="wf-ico-red"></div><!-- LogOut -->
+        Keluar
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="wf-main">
+    <header class="wf-header">
+      <div class="wf-header-left">
+        <div class="wf-panel-ico">≡</div><!-- PanelLeftClose -->
+        <div class="wf-header-label">Panel Admin</div>
+      </div>
+      <div class="wf-avatar-btn">
+        <div class="wf-avatar">A</div>
+        <div class="wf-avatar-info">
+          <div class="wf-avatar-name">Admin</div>
+          <div class="wf-avatar-role">Admin</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wf-content">
+      <div class="wf-page-title">Kelola Soal</div>
+
+      <!-- Form Tambah Soal Baru -->
+      <div class="wf-form-card">
+        <div class="wf-form-title">Tambah Soal Baru</div>
+        <div class="wf-form-group">
+          <div class="wf-label">Pertanyaan (Sikap)</div>
+          <div class="wf-input" style="color:#aaa">Tulis pertanyaan di sini...</div>
+        </div>
+        <!-- Grid 2: Opsi A | Opsi B -->
+        <div class="wf-form-grid">
+          <div>
+            <div class="wf-label">Opsi A</div>
+            <div class="wf-input" style="color:#aaa; margin-bottom:8px;">Teks Opsi A</div>
+            <div class="wf-sub-label">Nilai Dimensi Opsi A</div>
+            <div class="wf-select"><span>Extraversion (E)</span><span>▾</span></div>
+          </div>
+          <div>
+            <div class="wf-label">Opsi B</div>
+            <div class="wf-input" style="color:#aaa; margin-bottom:8px;">Teks Opsi B</div>
+            <div class="wf-sub-label">Nilai Dimensi Opsi B</div>
+            <div class="wf-select"><span>Introversion (I)</span><span>▾</span></div>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <div class="wf-save-btn">
+            <div class="wf-btn-ico"></div><!-- Plus icon -->
+            Simpan Soal
+          </div>
+        </div>
+      </div>
+
+      <!-- Daftar Soal -->
+      <div class="wf-list-head">Daftar Soal (3)</div>
+
+      <div class="wf-soal-card">
+        <div class="wf-soal-body">
+          <div style="margin-bottom:8px;">
+            <span class="wf-soal-num">#1</span>
+            <span class="wf-soal-q">Anda merasa bersemangat setelah menghadiri acara sosial besar.</span>
+          </div>
+          <div class="wf-opsi-grid">
+            <div class="wf-opsi-box">
+              <div class="wf-opsi-lbl">Opsi A — E</div>
+              <div class="wf-opsi-val">Ya, saya suka berinteraksi dengan banyak orang.</div>
+            </div>
+            <div class="wf-opsi-box">
+              <div class="wf-opsi-lbl">Opsi B — I</div>
+              <div class="wf-opsi-val">Tidak, saya lebih suka ketenangan sendiri.</div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-hapus-btn"><div class="wf-trash-ico"></div></div><!-- Trash2 icon -->
+      </div>
+
+      <div class="wf-soal-card">
+        <div class="wf-soal-body">
+          <div style="margin-bottom:8px;">
+            <span class="wf-soal-num">#2</span>
+            <span class="wf-soal-q">Anda cenderung berfokus pada apa yang ada saat ini dan fakta konkret.</span>
+          </div>
+          <div class="wf-opsi-grid">
+            <div class="wf-opsi-box">
+              <div class="wf-opsi-lbl">Opsi A — S</div>
+              <div class="wf-opsi-val">Ya, saya fokus pada hal yang nyata dan konkret.</div>
+            </div>
+            <div class="wf-opsi-box">
+              <div class="wf-opsi-lbl">Opsi B — N</div>
+              <div class="wf-opsi-val">Tidak, saya suka memikirkan kemungkinan masa depan.</div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-hapus-btn"><div class="wf-trash-ico"></div></div>
+      </div>
+
+      <div class="wf-soal-card">
+        <div class="wf-soal-body">
+          <div style="margin-bottom:8px;">
+            <span class="wf-soal-num">#3</span>
+            <span class="wf-soal-q">Dalam mengambil keputusan, logika lebih penting dibandingkan perasaan orang lain.</span>
+          </div>
+          <div class="wf-opsi-grid">
+            <div class="wf-opsi-box">
+              <div class="wf-opsi-lbl">Opsi A — T</div>
+              <div class="wf-opsi-val">Ya, logika adalah prioritas utama saya.</div>
+            </div>
+            <div class="wf-opsi-box">
+              <div class="wf-opsi-lbl">Opsi B — F</div>
+              <div class="wf-opsi-val">Tidak, saya mempertimbangkan perasaan orang lain.</div>
+            </div>
+          </div>
+        </div>
+        <div class="wf-hapus-btn"><div class="wf-trash-ico"></div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
