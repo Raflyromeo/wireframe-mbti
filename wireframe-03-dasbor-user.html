@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wireframe 03 — Dasbor User</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #f0f0f0; color: #222; font-size: 13px; }
+    .wf-app { display: flex; height: 100vh; max-width: 1200px; margin: 0 auto; background: #fafafa; border: 1.5px solid #ccc; overflow: hidden; }
+
+    /* ═══ SIDEBAR USER ═══ */
+    .wf-sidebar { width: 272px; flex-shrink: 0; border-right: 2px solid #ccc; background: #fff; display: flex; flex-direction: column; }
+    /* Logo area (h-16 = 64px) */
+    .wf-sid-logo { height: 64px; border-bottom: 2px solid #ccc; display: flex; align-items: center; gap: 8px; padding: 0 28px; }
+    .wf-sid-logo-icon { width: 20px; height: 20px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; border-radius: 3px; }
+    /* Nama "MBTI Pakar" */
+    .wf-sid-logo-name { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: -0.5px; }
+    /* Menu items */
+    .wf-sid-menu { flex: 1; padding: 8px 12px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
+    .wf-menu-item { display: flex; align-items: center; gap: 14px; padding: 11px 14px; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px; border: 2px solid transparent; border-radius: 999px; }
+    .wf-menu-item.active { background: #e0e0e0; border-color: #bbb; }
+    /* Ikon: LayoutDashboard, FileText, ActivitySquare, User — dibuat sbg kotak abu2 berstruktur */
+    .wf-ico { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #aaa; background: #ddd; }
+    /* Logout di bawah */
+    .wf-sid-footer { border-top: 2px solid #ccc; padding: 12px 16px; }
+    .wf-logout { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 2px solid transparent; border-radius: 999px; font-size: 12px; font-weight: bold; text-transform: uppercase; color: #c00; }
+    .wf-ico-red { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #c00; background: #fdd; }
+
+    /* ═══ MAIN AREA ═══ */
+    .wf-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+    /* Header (h-16) */
+    .wf-header { height: 64px; border-bottom: 2px solid #ccc; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0; }
+    .wf-header-left { display: flex; align-items: center; gap: 10px; }
+    /* PanelLeftClose icon */
+    .wf-panel-ico { width: 32px; height: 32px; border: 1.5px solid #ccc; background: #f0f0f0; display: flex; align-items: center; justify-content: center; }
+    .wf-panel-ico svg-placeholder { display: block; width: 14px; height: 14px; background: #bbb; border-radius: 2px; }
+    .wf-header-label { font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; }
+    /* Avatar + nama di header kanan */
+    .wf-avatar-btn { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; border: 1.5px solid transparent; }
+    .wf-avatar { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #bbb; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; }
+    .wf-avatar-info { display: flex; flex-direction: column; }
+    .wf-avatar-name { font-size: 12px; font-weight: 900; line-height: 1.1; }
+    .wf-avatar-role { font-size: 10px; font-weight: bold; text-transform: uppercase; color: #aaa; }
+    /* Content */
+    .wf-content { flex: 1; overflow-y: auto; padding: 28px; display: flex; flex-direction: column; gap: 24px; }
+    /* Breadcrumb: Home ikon + "Dasbor" */
+    .wf-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 900; text-transform: uppercase; }
+    .wf-bc-icon { width: 14px; height: 14px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; }
+    /* Banner */
+    .wf-banner { background: #ddd; border: 2px solid #bbb; padding: 32px 28px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .wf-banner-text h1 { font-size: 42px; font-weight: 900; letter-spacing: -1.5px; line-height: 1; margin-bottom: 10px; }
+    .wf-banner-text p { font-size: 12px; color: #666; margin-bottom: 16px; max-width: 380px; line-height: 1.5; }
+    .wf-banner-btn { display: flex; align-items: center; gap: 7px; padding: 12px 22px; border: 2px solid #888; background: #fff; font-weight: 900; font-size: 12px; }
+    .wf-banner-icon { width: 100px; height: 100px; border: 2px solid #bbb; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .wf-brain-ph { width: 56px; height: 56px; background: #ccc; border: 1px solid #aaa; border-radius: 50%; }
+    /* Section header (Riwayat Tes) */
+    .wf-sec-head { display: flex; align-items: center; gap: 10px; }
+    .wf-sec-ico { width: 18px; height: 18px; background: #ccc; border: 1px solid #aaa; flex-shrink: 0; }
+    .wf-sec-h2 { font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
+    .wf-sec-line { flex: 1; height: 1.5px; background: #ccc; }
+    .wf-sec-count { font-size: 10px; font-weight: bold; border: 1.5px solid #ccc; padding: 2px 8px; border-radius: 999px; }
+    /* Grid riwayat */
+    .wf-riwayat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .wf-riwayat-card { border: 2px solid #ccc; background: #fff; padding: 18px; }
+    .wf-riwayat-card.first { background: #e4e4e4; }
+    .wf-badge-new { display: inline-block; font-size: 9px; font-weight: 900; background: #333; color: #fff; padding: 2px 7px; border-radius: 4px; margin-bottom: 8px; text-transform: uppercase; }
+    .wf-riwayat-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+    .wf-tipe-big { font-size: 28px; font-weight: 900; letter-spacing: -1px; }
+    .wf-tipe-date { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #aaa; margin-top: 2px; }
+    .wf-detail-btn { display: flex; align-items: center; gap: 4px; padding: 5px 10px; border: 1.5px solid #ccc; background: #fff; font-size: 10px; font-weight: bold; flex-shrink: 0; }
+    .wf-dim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border-top: 1.5px solid #ccc; margin-top: 10px; padding-top: 10px; }
+    .wf-dim-item { border: 1px solid #ddd; padding: 6px 8px; background: #f5f5f5; }
+    .wf-dim-lbl { font-size: 9px; font-weight: bold; text-transform: uppercase; color: #aaa; margin-bottom: 2px; }
+    .wf-dim-val { font-size: 10px; font-weight: bold; margin-bottom: 4px; }
+    .wf-dim-bar { height: 5px; background: #ddd; }
+    .wf-dim-fill { height: 100%; background: #999; }
+  </style>
+</head>
+<body>
+<div class="wf-app">
+  <!-- SIDEBAR USER -->
+  <aside class="wf-sidebar">
+    <!-- Logo -->
+    <div class="wf-sid-logo">
+      <div class="wf-sid-logo-icon"></div><!-- BrainCircuit icon -->
+      <div class="wf-sid-logo-name">MBTI Pakar</div>
+    </div>
+    <!-- Menu -->
+    <div class="wf-sid-menu">
+      <!-- LayoutDashboard → Ringkasan (active) -->
+      <div class="wf-menu-item active">
+        <div class="wf-ico"></div><!-- LayoutDashboard -->
+        Ringkasan
+      </div>
+      <!-- FileText → Mulai Tes -->
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- FileText -->
+        Mulai Tes
+      </div>
+      <!-- ActivitySquare → Riwayat Hasil -->
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- ActivitySquare -->
+        Riwayat Hasil
+      </div>
+      <!-- User → Pengaturan Profil -->
+      <div class="wf-menu-item">
+        <div class="wf-ico"></div><!-- User -->
+        Pengaturan Profil
+      </div>
+    </div>
+    <!-- Logout -->
+    <div class="wf-sid-footer">
+      <div class="wf-logout">
+        <div class="wf-ico-red"></div><!-- LogOut -->
+        Keluar
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="wf-main">
+    <!-- Header -->
+    <header class="wf-header">
+      <div class="wf-header-left">
+        <div class="wf-panel-ico">≡</div><!-- PanelLeftClose icon -->
+        <div class="wf-header-label">Dasbor Pengguna</div>
+      </div>
+      <div class="wf-avatar-btn">
+        <div class="wf-avatar">R</div>
+        <div class="wf-avatar-info">
+          <div class="wf-avatar-name">Muhammad Ra...</div>
+          <div class="wf-avatar-role">User</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="wf-content">
+      <!-- Breadcrumb: Home + "Dasbor" -->
+      <div class="wf-breadcrumb">
+        <div class="wf-bc-icon"></div><!-- Home icon -->
+        Dasbor
+      </div>
+
+      <!-- Banner Selamat Datang -->
+      <div class="wf-banner">
+        <div class="wf-banner-text">
+          <h1>Halo,<br>Rafly!</h1>
+          <p>Selamat datang kembali. Kenali diri Anda lebih dalam dan temukan potensi tersembunyi Anda!</p>
+          <div class="wf-banner-btn">▶ Mulai Tes Baru</div>
+        </div>
+        <div class="wf-banner-icon">
+          <div class="wf-brain-ph"></div><!-- BrainCircuit icon besar -->
+        </div>
+      </div>
+
+      <!-- Riwayat Tes -->
+      <div class="wf-sec-head">
+        <div class="wf-sec-ico"></div><!-- History icon -->
+        <div class="wf-sec-h2">Riwayat Tes</div>
+        <div class="wf-sec-line"></div>
+        <div class="wf-sec-count">2 tes</div>
+      </div>
+      <div class="wf-riwayat-grid">
+        <!-- Kartu Terbaru -->
+        <div class="wf-riwayat-card first">
+          <div class="wf-badge-new">Terbaru</div>
+          <div class="wf-riwayat-top">
+            <div>
+              <div class="wf-tipe-big">INTJ</div>
+              <div class="wf-tipe-date"><div style="width:10px;height:10px;background:#bbb;flex-shrink:0;"></div> 12 Juni 2024</div>
+            </div>
+            <div class="wf-detail-btn">Detail ›</div>
+          </div>
+          <div class="wf-dim-grid">
+            <div class="wf-dim-item"><div class="wf-dim-lbl">E-I</div><div class="wf-dim-val">I 75%</div><div class="wf-dim-bar"><div class="wf-dim-fill" style="width:75%"></div></div></div>
+            <div class="wf-dim-item"><div class="wf-dim-lbl">S-N</div><div class="wf-dim-val">N 68%</div><div class="wf-dim-bar"><div class="wf-dim-fill" style="width:68%"></div></div></div>
+            <div class="wf-dim-item"><div class="wf-dim-lbl">T-F</div><div class="wf-dim-val">T 60%</div><div class="wf-dim-bar"><div class="wf-dim-fill" style="width:60%"></div></div></div>
+            <div class="wf-dim-item"><div class="wf-dim-lbl">J-P</div><div class="wf-dim-val">J 80%</div><div class="wf-dim-bar"><div class="wf-dim-fill" style="width:80%"></div></div></div>
+          </div>
+        </div>
+        <!-- Kartu Lama -->
+        <div class="wf-riwayat-card">
+          <div class="wf-riwayat-top">
+            <div>
+              <div class="wf-tipe-big">INFP</div>
+              <div class="wf-tipe-date"><div style="width:10px;height:10px;background:#bbb;flex-shrink:0;"></div> 5 Januari 2024</div>
+            </div>
+            <div class="wf-detail-btn">Detail ›</div>
+          </div>
+          <div class="wf-dim-grid">
+            <div class="wf-dim-item"><div class="wf-dim-lbl">E-I</div><div class="wf-dim-val">I 65%</div><div class="wf-dim-bar"><div class="wf-dim-fill" style="width:65%"></div></div></div>
+            <div class="wf-dim-item"><div class="wf-dim-lbl">S-N</div><div class="wf-dim-val">N 72%</div><div class="wf-dim-bar"><div class="wf-dim-fill" style="width:72%"></div></div></div>
+            <div class="wf-dim-item"><div class="wf-dim-lbl">T-F</div><div class="wf-dim-val">F 58%</div><div class="wf-dim-bar"><div class="wf-dim-fill" style="width:58%"></div></div></div>
+            <div class="wf-dim-item"><div class="wf-dim-lbl">J-P</div><div class="wf-dim-val">P 55%</div><div class="wf-dim-bar"><div class="wf-dim-fill" style="width:55%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
